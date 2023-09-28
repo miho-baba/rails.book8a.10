@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <h2>User info</h2>
+      <%= render 'users/info', user: @user %>
+      <h2 >New book</h2>
+      <%= render 'form', book: @book_new %>
+    </div>
+    <div class="col-md-8 offset-md-1">
+      <h2>Book detail</h2>
+      <table class="table table-hover table-inverse">
+      <tbody>
+        <tr>
+          <td>
+            <%= link_to user_path(@book.user) do %>
+              <%= image_tag @book.user.get_profile_image(100,100) %>
+              <br>
+              <%= @book.user.name %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to book_path(@book.id) do %>
+              <%= @book.title %>
+            <% end %>
+          </td>
+          <td id="favorite_btn_<%= @book.id %>" >
+            <%= render "favorites/favorite", book: @book %>
+          </td>
+          <td id="comment_counter">
+             <%= render "book_comments/counter", book: @book %>
+          </td>
+          <td><%= @book.body %></td>
+          <% if @book.user == current_user %>
+            <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit" %></td>
+          <% end %>
+          <% if @book.user == current_user %>
+            <td><%= link_to 'Destroy', book_path(@book.id), method: :delete, class: 'btn btn-sm btn-danger destroy'%></td>
+          <% end %>
+        </tr>
+      </tbody>
+      </table>
+      <div id="comment_index">
+         <%= render "book_comments/index", book: @book %>
+      </div>
+        <%= render "book_comments/form", book: @book, book_comment: @book_comment %>
+      </div>
+    </div>
+  </div>
+</div>

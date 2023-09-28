@@ -1,0 +1,39 @@
+<h2>Follow　Users</h2>
+  <% if @users.exists? %>
+    <%= render "/users/index", users: @users %>
+  <% else %>
+    <p>ユーザーはいません</p>
+  <% end %>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>image</th>
+        <th>name</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td>
+            <%= link_to user_path(user) do %>
+              <%= image_tag user.get_profile_image(50,50) %>
+            <% end %>
+          </td>
+          <td><%= user.name %></td>
+          <td>
+            <%= link_to follows_user_path(user) do %>
+              <h6>フォロー数<%= user.followers.count %></h6>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to followers_user_path(user) do %>
+              <h6>フォロワー数<%= user.followeds.count %></h6>
+            <% end %>
+          </td>
+          <td><%= link_to 'Show', book_path %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
